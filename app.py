@@ -3,8 +3,8 @@ from flask import Flask, g # stands for global and we are setting up a global
 # access to our database throughout the app
 from flask_cors import CORS 
 from flask_login import LoginManager
-# from resources.users import user
-# from resources.professionals import professional
+from resources.users import user
+from resources.professionals import professional
 import models 
 
 
