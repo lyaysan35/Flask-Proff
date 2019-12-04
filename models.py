@@ -11,7 +11,14 @@ class User(Model):
     email = CharField()
     password = CharField()
 
-class Professional(User):
+    class Meta:
+        database = DATABASE
+
+class Professional(Model):
+    # Strech goal -> Inherits from User -> meaning has all of User's fields plus the ones we add
+    # created_at
+    # email
+    # password
     name = CharField()
     location = CharField()
     contact = CharField()

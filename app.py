@@ -66,4 +66,5 @@ app.register_blueprint(user, url_prefix='/users')
 
 # Run the app when the program starts!
 if __name__ == '__main__':
+    models.initialize()
     app.run(debug=DEBUG, port=PORT)
