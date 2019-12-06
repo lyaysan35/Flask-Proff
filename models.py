@@ -1,13 +1,12 @@
-
+import os
 from peewee import *
 import datetime
+from playhouse.db_url import connect
 
 if 'ON_HEROKU' in os.environ:
-  DATABASE = connect(os.environ.get('DATABASE_URL'))
+    DATABASE = connect(os.environ.get('DATABASE_URL'))
 else:
-  DATABASE = SqliteDatabase('places.sqlite')
-
-DATABASE = SqliteDatabase('professionals.sqlite')
+    DATABASE = SqliteDatabase('professionals.sqlite')
 
 
 # Create user class just like Dog App or TravelApp
