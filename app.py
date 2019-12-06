@@ -55,13 +55,15 @@ def index():
     return 'hi'
 
 
-CORS(professional, origins=['http://localhost:3000'], supports_credentials=True) # adding this line
+CORS(professional, origins=['http://localhost:3000', 'https://react-proff.herokuapp.com/'], supports_credentials=True) # adding this line
 app.register_blueprint(professional, url_prefix='/api/v1/professionals') # adding this line
 
-CORS(user, origins=['http://localhost:3000'], supports_credentials=True)
+CORS(user, origins=['http://localhost:3000', 'https://react-proff.herokuapp.com/'], supports_credentials=True)
 app.register_blueprint(user, url_prefix='/users')
 
-
+if 'ON_HEROKU' in os.environ:
+    print('hitting')
+    models.initialize()
 
 
 # Run the app when the program starts!

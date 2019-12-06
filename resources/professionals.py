@@ -20,6 +20,18 @@ def get_all_professionals():
     except models.DoesNotExist:
         return jsonify(data={}, status={"code": 401, "message": "Error getting the resources"})
 
+@professional.route('/search', methods=["GET"])
+def search_professionals():
+    ## find the professianals and change each one to a dictionary into a new array
+    try:
+        # Get field & location for query string
+        # Example request.args.get('field')
+        professionals = [model_to_dict(professional) for professional in models.Professional.select()]
+        print(professionals)
+        return jsonify(data=professionals, status={"code": 200, "message": "Success"})
+    except models.DoesNotExist:
+        return jsonify(data={}, status={"code": 401, "message": "Error getting the resources"})
+
 
 @professional.route('/', methods=["POST"])
 def create_professionals():
@@ -28,6 +40,7 @@ def create_professionals():
     print(type(payload), 'payload')
     professionals = models.Professional.create(**payload)
     ## see the object
+
     print(professionals.__dict__)
     ## Look at all the methods
     print(dir(professionals))

@@ -2,6 +2,11 @@
 from peewee import *
 import datetime
 
+if 'ON_HEROKU' in os.environ:
+  DATABASE = connect(os.environ.get('DATABASE_URL'))
+else:
+  DATABASE = SqliteDatabase('places.sqlite')
+
 DATABASE = SqliteDatabase('professionals.sqlite')
 
 
