@@ -4,6 +4,7 @@ from flask import Blueprint, jsonify, request
 from flask_bcrypt import generate_password_hash, check_password_hash
 from flask_login import login_user, current_user, logout_user
 from playhouse.shortcuts import model_to_dict
+from peewee import DoesNotExist
 
 #register our user blueprint
 #pass in the blueprint name and the import_name
@@ -28,7 +29,7 @@ def register():
         # Find if the user already exists?
         models.User.get(models.User.email == payload['email']) # model query finding by email
         return jsonify(data={}, status={"code": 401, "message": "A user with that name already exists"})
-    except models.DoesNotExist:
+    except DoesNotExist:
         payload['password'] = generate_password_hash(payload['password']) # bcrypt line for generating the hash
         user = models.User.create(**payload) # put the user in the database
                                              # **payload, is spreading like js (...) the properties of the payload object out

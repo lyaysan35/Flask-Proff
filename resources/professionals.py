@@ -4,7 +4,7 @@ import models
 from flask import Blueprint, jsonify, request
 # from flask_login import current_user
 from playhouse.shortcuts import model_to_dict
-
+from peewee import DoesNotExist
 
 
 
@@ -17,7 +17,7 @@ def get_all_professionals():
         professionals = [model_to_dict(professional) for professional in models.Professional.select()]
         print(professionals)
         return jsonify(data=professionals, status={"code": 200, "message": "Success"})
-    except models.DoesNotExist:
+    except DoesNotExist:
         return jsonify(data={}, status={"code": 401, "message": "Error getting the resources"})
 
 @professional.route('/search', methods=["GET"])
@@ -29,7 +29,7 @@ def search_professionals():
         professionals = [model_to_dict(professional) for professional in models.Professional.select()]
         print(professionals)
         return jsonify(data=professionals, status={"code": 200, "message": "Success"})
-    except models.DoesNotExist:
+    except DoesNotExist:
         return jsonify(data={}, status={"code": 401, "message": "Error getting the resources"})
 
 
