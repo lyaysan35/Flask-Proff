@@ -1,6 +1,7 @@
 import os
-from peewee import *
 import datetime
+from peewee import *
+from flask_login import UserMixin
 from playhouse.db_url import connect
 
 if 'ON_HEROKU' in os.environ:
@@ -10,7 +11,7 @@ else:
 
 
 # Create user class just like Dog App or TravelApp
-class User(Model):
+class User(UserMixin, Model):
     created_at = DateTimeField(default=datetime.datetime.now)
     email = CharField()
     password = CharField()
