@@ -6,9 +6,7 @@ from flask import Blueprint, jsonify, request
 from playhouse.shortcuts import model_to_dict
 from peewee import DoesNotExist
 
-
-
-professional = Blueprint('professionals', 'professionals')
+professional = Blueprint('professionals', 'professional')
 
 @professional.route('/', methods=["GET"])
 def get_all_professionals():
@@ -26,9 +24,17 @@ def search_professionals():
     try:
         # Get field & location for query string
         # Example request.args.get('field')
-        professionals = [model_to_dict(professional) for professional in models.Professional.select()]
-        print(professionals)
-        return jsonify(data=professionals, status={"code": 200, "message": "Success"})
+        field = request.args.get('field'); # get the field from client's request
+        location = request.args.get('location'); # get the location from client's request
+        professionals = [model_to_dict(professional) for professional in models.Professional.select()] # get all professionals from database
+        # filter professionals from database and keep only the ones that match client's request
+        matchingProfs = list(filter(lambda p: p['field'].lower() == field.lower() and p['location'].lower() == location.lower(), professionals))
+        # lambda - anonymous TEST function
+        # filter - function takes each professional from array and puts it through the TEST
+        # if professional passes test, we keep it
+
+        ## send filtered array to client in response
+        return jsonify(data=matchingProfs, status={"code": 200, "message": "Success"})
     except DoesNotExist:
         return jsonify(data={}, status={"code": 401, "message": "Error getting the resources"})
 
