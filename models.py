@@ -15,6 +15,7 @@ class User(UserMixin, Model):
     created_at = DateTimeField(default=datetime.datetime.now)
     email = CharField()
     password = CharField()
+    # profId = CharField()
 
     class Meta:
         database = DATABASE
@@ -31,6 +32,7 @@ class Professional(Model):
     field = CharField()
     subfield = CharField()
     personal_image_url = CharField()
+    userId = CharField()
     # Has many images from foreign key on Image
 
     # field
