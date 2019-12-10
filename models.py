@@ -15,7 +15,6 @@ class User(UserMixin, Model):
     created_at = DateTimeField(default=datetime.datetime.now)
     email = CharField()
     password = CharField()
-    # profId = CharField()
 
     class Meta:
         database = DATABASE

@@ -57,8 +57,12 @@ def login():
         if(check_password_hash(user_dict['password'], payload['password'])):
             del user_dict['password']
             login_user(user)
-            print(user, ' this is user')
-            return jsonify(data=user_dict, status={"code": 200, "message": "Success"})
+            # After user successfully logs in, fetch the Professional model that user
+            # created when he/she registered by matching the userId of the Professional
+            # model with the id of the user, who just logged in.
+            prof_dict = model_to_dict(models.Professional.get(models.Professional.userId == user.id))
+            response = { 'user': user_dict, 'prof': prof_dict }
+            return jsonify(data=response, status={"code": 200, "message": "Success"})
         else:
             return jsonify(data={}, status={"code": 401, "message": "Username or Password is incorrect"})
     except models.DoesNotExist:
