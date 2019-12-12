@@ -5,6 +5,8 @@ from flask import Blueprint, jsonify, request
 # from flask_login import current_user
 from playhouse.shortcuts import model_to_dict
 from peewee import DoesNotExist
+import seed_db
+
 
 professional = Blueprint('professionals', 'professional')
 
@@ -82,3 +84,8 @@ def delete_professionals(id):
     query.execute() # you have to execute the update queries
     return jsonify(data='resource successfully deleted', status={"code": 200, "message": "resource deleted successfully"})
 
+
+@professional.route('/populate')
+def populate_profs():
+    if not len(models.Professional.select()):
+        seed_db.populate_db()
